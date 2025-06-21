@@ -1,0 +1,63 @@
+# === JetBrains (CLion, etc.) ===
+.idea/
+*.iml
+
+# === CMake build directories ===
+cmake-build-*/
+
+# === CMake generated files ===
+CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+
+# === Compiled binaries ===
+TwitchConsoleViewer
+
+# === Auto-generated config (runtime only) ===
+config/
+
+# === Unit test artifacts ===
+Testing/
+
+# === OS-specific ===
+.DS_Store
+Thumbs.db
+
+# === Temporary / logs ===
+*.log
+*.tmp
+
+#== Github Generated C++ Template ==
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
