@@ -5,7 +5,7 @@ Log in and connect to Twitch chat, send and receive messages. Colors, badges, hi
 
 ---
 
-## ✨ Features
+##  Features
 
 | Category           | Details |
 |--------------------|---------|
@@ -19,7 +19,7 @@ Log in and connect to Twitch chat, send and receive messages. Colors, badges, hi
 
 ---
 
-## 🛠 Requirements
+##  Requirements
 
 | Tool | Version |
 |------|---------|
@@ -29,7 +29,7 @@ Log in and connect to Twitch chat, send and receive messages. Colors, badges, hi
 
 ---
 
-## 🚀 First-time Run
+##  Initial Run
 
 ```bash
 ./TwitchConsoleViewer
@@ -44,7 +44,7 @@ Chat starts immediately; future launches read the stored credentials.
 
 ---
 
-## 🗨️ Built-in Commands
+##  Built-in Commands
 
 | Command | Description |
 |---------|-------------|
@@ -64,7 +64,7 @@ Chat starts immediately; future launches read the stored credentials.
 
 ---
 
-## 🖌 Colour Support
+##  Colour Support
 
 - True-colour terminals get exact hex values.  
 - 256-/16-colour terminals fall back automatically.  

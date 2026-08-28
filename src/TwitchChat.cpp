@@ -385,7 +385,7 @@ void TwitchChat::loadAndLoginProcess() {
         setLoginInfo(oauth, user, channel);
 
         /*chat.setLoginInfo(
-                "oauth:nbdllm9luiaszzzhc9ovuctqgqz6hk",
+                "oauth:REDACTED",
                 "gavinbot32",
                 "#gavinbot32"
         );*/
