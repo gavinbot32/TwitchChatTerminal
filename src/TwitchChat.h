@@ -2,6 +2,7 @@
 #pragma once
 
 #include <asio.hpp>
+#include <asio/ssl.hpp>
 #include <string>
 
 class TwitchChat {
@@ -25,7 +26,8 @@ public:
 
 private:
     asio::io_context& io;
-    asio::ip::tcp::socket socket;
+    asio::ssl::context ssl_context; // Add this before the socket
+    asio::ssl::stream<asio::ip::tcp::socket> socket;
     asio::streambuf buffer;
     std::string username;
     std::string oauth;

@@ -25,7 +25,11 @@ extern std::unordered_map<std::string, std::string> badges;
 using asio::ip::tcp;
 
 TwitchChat::TwitchChat(asio::io_context& io_context)
-        : io(io_context), socket(io_context) {
+        : io(io_context),
+          ssl_context(asio::ssl::context::tls_client), // Initialize context
+          socket(io_context, ssl_context)              // Wrap socket
+{
+    ssl_context.set_options(asio::ssl::context::default_workarounds | asio::ssl::context::no_sslv2 | asio::ssl::context::no_sslv3);
     setUserColor("#008787");
     loadAndLoginProcess();
     updateSettings();
@@ -83,7 +87,7 @@ void TwitchChat::login(){
 }
 
 void TwitchChat::read_messages() {
-    if(!socket.is_open()) return;
+    if(!socket.lowest_layer().is_open()) return;
 
     if(buffer.size() > MAX_BUFFER_SIZE) {
         buffer.consume(buffer.size());
@@ -160,7 +164,7 @@ void TwitchChat::read_messages() {
 }
 
 void TwitchChat::sendMessage(const std::string& msg) {
-    if (!socket.is_open()) return;
+    if (!socket.lowest_layer().is_open()) return;
 
     std::string fullMsg = "PRIVMSG " + channel + " :" + msg + "\r\n";
     asio::async_write(socket, asio::buffer(fullMsg),
@@ -174,25 +178,37 @@ void TwitchChat::sendMessage(const std::string& msg) {
 }
 
 void TwitchChat::connect() {
-    if (socket.is_open()) return;
+    socket = asio::ssl::stream<asio::ip::tcp::socket>(io, ssl_context);
+
+    if (socket.lowest_layer().is_open()) return;
 
     is_connecting = true;
     auto connect_promise = std::make_shared<std::promise<void>>();
     auto connect_future = connect_promise->get_future();
     
     tcp::resolver resolver(io);
-    auto endpoints = resolver.resolve("irc.chat.twitch.tv", "6667");
+    auto endpoints = resolver.resolve("irc.chat.twitch.tv", "6697");
 
-    asio::async_connect(socket, endpoints,
-        [this, promise = std::move(connect_promise)](const asio::error_code& ec, const tcp::endpoint&) {
-            if (!ec) {
-                sendCapabilityRequest();
-            } else {
-                std::cerr << "Connect error: " << ec.message() << std::endl;
-            }
-            is_connecting = false;
-            promise->set_value();
-        });
+    asio::async_connect(socket.lowest_layer(), endpoints, [this, promise = std::move(connect_promise)](const asio::error_code& ec, const tcp::endpoint&) {
+        if (!ec) {
+
+            SSL_set_tlsext_host_name(socket.native_handle(), "irc.chat.twitch.tv");
+
+            // Perform SSL handshake before sending data
+            socket.async_handshake(asio::ssl::stream_base::client, [this](const asio::error_code& handshake_ec) {
+                if (!handshake_ec) {
+                    sendCapabilityRequest();
+                } else {
+                    std::cerr << "IRC SSL Handshake error: " << handshake_ec.message() << std::endl;
+                }
+            });
+        } else {
+            std::cerr << "Connect error: " << ec.message() << std::endl;
+        }
+        is_connecting = false;
+        promise->set_value();
+    });
+
 
     std::cout << colorText("Connecting to ", "#008700") << colorText(channel, channelColor) << colorText("...", "#008700")<< std::endl;
     // Wait for connect to complete with timeout
@@ -202,24 +218,26 @@ void TwitchChat::connect() {
 }
 
 void TwitchChat::disconnect() {
-    if (!socket.is_open()) return;
-
-
+    if (!socket.lowest_layer().is_open()) return; // Fix here
     is_disconnecting = true;
+
     auto disconnect_promise = std::make_shared<std::promise<void>>();
     auto disconnect_future = disconnect_promise->get_future();
-    
+
     asio::post(io, [this, promise = std::move(disconnect_promise)](){
         asio::error_code ec;
-        socket.cancel(ec);  // Cancel any pending operations
-        socket.shutdown(tcp::socket::shutdown_both, ec);
-        socket.close(ec);
+
+        // Fix these three lines to target the lowest layer:
+        socket.lowest_layer().cancel(ec);
+        socket.lowest_layer().shutdown(tcp::socket::shutdown_both, ec);
+        socket.lowest_layer().close(ec);
+
         is_disconnecting = false;
         promise->set_value();
     });
 
     std::cout << colorText("Disconnecting from ","#5f0000") << colorText(channel, channelColor) << colorText("...", "#5f0000") << std::endl;
-    // Wait for disconnect to complete with timeout
+
     if (disconnect_future.wait_for(std::chrono::seconds(2)) == std::future_status::timeout) {
         is_disconnecting = false;
     }
@@ -261,15 +279,24 @@ void TwitchChat::sendCapabilityRequest() {
 bool TwitchChat::verifyTwitchToken(const std::string &oauth_token) {
     try {
         asio::io_context io_context;
-        asio::ssl::context ssl_context(asio::ssl::context::sslv23_client);
+        // FIX: Use modern TLS context
+        asio::ssl::context ssl_context(asio::ssl::context::tls_client);
 
-        // Create HTTPS client
+        // FIX: Forcefully disable SSLv2, SSLv3, TLSv1.0, and TLSv1.1
+        ssl_context.set_options(asio::ssl::context::default_workarounds
+                                | asio::ssl::context::no_sslv2
+                                | asio::ssl::context::no_sslv3
+                                | asio::ssl::context::no_tlsv1
+                                | asio::ssl::context::no_tlsv1_1);
+
         asio::ssl::stream<asio::ip::tcp::socket> socket(io_context, ssl_context);
 
         // Resolve and connect to api.twitch.tv
         asio::ip::tcp::resolver resolver(io_context);
         auto endpoints = resolver.resolve("id.twitch.tv", "443");
         asio::connect(socket.lowest_layer(), endpoints);
+
+        SSL_set_tlsext_host_name(socket.native_handle(), "id.twitch.tv");
 
         socket.handshake(asio::ssl::stream_base::client);
 

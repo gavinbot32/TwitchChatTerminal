@@ -171,7 +171,7 @@ public:
             std::cout << "Available test types:" << std::endl;
             std::cout << "1. echo - Simulate an echoed message" << std::endl;
             std::cout << "2. priv - Simulate a basic PRIVMSG" << std::endl;
-            std::cout << "2. priv - Simulate a raw message with tags" << std::endl;
+            std::cout << "3. raw - Simulate a raw message with tags" << std::endl;
             return;
         }
 
@@ -184,10 +184,90 @@ public:
             // Simulate a message without tags
             parseAndPrintMessage("PRIVMSG #channel :test message", isTyping, chat);
         }else if (test == "raw"){
+            parseAndPrintMessage("@badge-info=;badges=moderator/1,streamer-awards-2024/1;color=#66ff66;display-name=ByteWizard;"
+                                 "emotes=;first-msg=0;flags=;id=2fc5544a-2fa5-4860-96f2-6ed68c306913;mod=0;returning-chatter=0;"
+                                 "room-id=154649067;subscriber=0;tmi-sent-ts=1749175029323;turbo=0;user-id=154649067;"
+                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :chat are we actually watching twitch from a terminal",isTyping, chat);
+            parseAndPrintMessage("@badge-info=;badges=streamer-awards-2024/1;color=#ff0000;display-name=ipsum2000;"
+                                 "emotes=;first-msg=0;flags=;id=2fc5544a-2fa5-4860-96f2-6ed68c306913;mod=0;returning-chatter=0;"
+                                 "room-id=154649067;subscriber=0;tmi-sent-ts=1749175029323;turbo=0;user-id=154649067;"
+                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :well",isTyping, chat);
+            parseAndPrintMessage("@badge-info=;badges=streamer-awards-2024/1;color=#0000ff;display-name=LoremXD;"
+                                 "emotes=;first-msg=0;flags=;id=2fc5544a-2fa5-4860-96f2-6ed68c306913;mod=0;returning-chatter=0;"
+                                 "room-id=154649067;subscriber=0;tmi-sent-ts=1749175029323;turbo=0;user-id=154649067;"
+                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :thats cool",isTyping, chat);
+            parseAndPrintMessage("@badge-info=;badges=streamer-awards-2024/1;color=#ff6666;display-name=pixelPirate;"
+                                 "emotes=;first-msg=0;flags=;id=2fc5544a-2fa5-4860-96f2-6ed68c306913;mod=0;returning-chatter=0;"
+                                 "room-id=154649067;subscriber=0;tmi-sent-ts=1749175029323;turbo=0;user-id=154649067;"
+                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :technically we're chatting from one",isTyping, chat);
+            parseAndPrintMessage("@badge-info=;badges=streamer-awards-2024/1;color=#0000ff;display-name=LoremXD;"
+                                 "emotes=;first-msg=0;flags=;id=2fc5544a-2fa5-4860-96f2-6ed68c306913;mod=0;returning-chatter=0;"
+                                 "room-id=154649067;subscriber=0;tmi-sent-ts=1749175029323;turbo=0;user-id=154649067;"
+                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :thats cool",isTyping, chat);
+            parseAndPrintMessage("@badge-info=;badges=vip/1,streamer-awards-2024/1;color=#00ffff;display-name=NullReference;"
+                                 "emotes=;first-msg=0;flags=;id=2fc5544a-2fa5-4860-96f2-6ed68c306913;mod=0;returning-chatter=0;"
+                                 "room-id=154649067;subscriber=0;tmi-sent-ts=1749175029323;turbo=0;user-id=154649067;"
+                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :close enough LUL",isTyping, chat);
+            parseAndPrintMessage("@badge-info=;badges=streamer-awards-2024/1;color=#ff0000;display-name=ipsum2000;"
+                                 "emotes=;first-msg=0;flags=;id=2fc5544a-2fa5-4860-96f2-6ed68c306913;mod=0;returning-chatter=0;"
+                                 "room-id=154649067;subscriber=0;tmi-sent-ts=1749175029323;turbo=0;user-id=154649067;"
+                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :LUL",isTyping, chat);
+            parseAndPrintMessage("@badge-info=;badges=subscriber/1,streamer-awards-2024/1;color=#6694ff;display-name=segfaultSteve;"
+                                 "emotes=;first-msg=0;flags=;id=2fc5544a-2fa5-4860-96f2-6ed68c306913;mod=0;returning-chatter=0;"
+                                 "room-id=154649067;subscriber=0;tmi-sent-ts=1749175029323;turbo=0;user-id=154649067;"
+                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :imagine needing a browser",isTyping, chat);
+            parseAndPrintMessage("@badge-info=;badges=streamer-awards-2024/1;color=#0000ff;display-name=LoremXD;"
+                                 "emotes=;first-msg=0;flags=;id=2fc5544a-2fa5-4860-96f2-6ed68c306913;mod=0;returning-chatter=0;"
+                                 "room-id=154649067;subscriber=0;tmi-sent-ts=1749175029323;turbo=0;user-id=154649067;"
+                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :TRUE",isTyping, chat);
+            parseAndPrintMessage("@badge-info=;badges=turbo/1,streamer-awards-2024/1;color=#ffffff;display-name=CodeMonkey;"
+                                 "emotes=;first-msg=0;flags=;id=2fc5544a-2fa5-4860-96f2-6ed68c306913;mod=0;returning-chatter=0;"
+                                 "room-id=154649067;subscriber=0;tmi-sent-ts=1749175029323;turbo=0;user-id=154649067;"
+                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :wait this was written in C++?",isTyping, chat);
             parseAndPrintMessage("@badge-info=;badges=broadcaster/1,streamer-awards-2024/1;color=#FF69B4;display-name=gavinbot32;"
                                  "emotes=;first-msg=0;flags=;id=2fc5544a-2fa5-4860-96f2-6ed68c306913;mod=0;returning-chatter=0;"
                                  "room-id=154649067;subscriber=0;tmi-sent-ts=1749175029323;turbo=0;user-id=154649067;"
-                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :kek",isTyping, chat);
+                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :yep, C++20",isTyping, chat);
+            parseAndPrintMessage("@badge-info=;badges=streamer-awards-2024/1;color=#ff0000;display-name=ipsum2000;"
+                                 "emotes=;first-msg=0;flags=;id=2fc5544a-2fa5-4860-96f2-6ed68c306913;mod=0;returning-chatter=0;"
+                                 "room-id=154649067;subscriber=0;tmi-sent-ts=1749175029323;turbo=0;user-id=154649067;"
+                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :You made this gavin?",isTyping, chat);
+            parseAndPrintMessage("@badge-info=;badges=broadcaster/1,streamer-awards-2024/1;color=#FF69B4;display-name=gavinbot32;"
+                                 "emotes=;first-msg=0;flags=;id=2fc5544a-2fa5-4860-96f2-6ed68c306913;mod=0;returning-chatter=0;"
+                                 "room-id=154649067;subscriber=0;tmi-sent-ts=1749175029323;turbo=0;user-id=154649067;"
+                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :yep I figured it'd be a fun way to learn C++",isTyping, chat);
+            parseAndPrintMessage("@badge-info=;badges=moderator/1,streamer-awards-2024/1;color=#66ff66;display-name=ByteWizard;"
+                                 "emotes=;first-msg=0;flags=;id=2fc5544a-2fa5-4860-96f2-6ed68c306913;mod=0;returning-chatter=0;"
+                                 "room-id=154649067;subscriber=0;tmi-sent-ts=1749175029323;turbo=0;user-id=154649067;"
+                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :W",isTyping, chat);
+            parseAndPrintMessage("@badge-info=;badges=streamer-awards-2024/1;color=#ff6666;display-name=pixelPirate;"
+                                 "emotes=;first-msg=0;flags=;id=2fc5544a-2fa5-4860-96f2-6ed68c306913;mod=0;returning-chatter=0;"
+                                 "room-id=154649067;subscriber=0;tmi-sent-ts=1749175029323;turbo=0;user-id=154649067;"
+                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :the colored usernames are a nice touch",isTyping, chat);
+            parseAndPrintMessage("@badge-info=;badges=partner/1,subscriber/1,streamer-awards-2024/1;color=#00ffff;display-name=CoolPartner;"
+                                 "emotes=;first-msg=0;flags=;id=2fc5544a-2fa5-4860-96f2-6ed68c306913;mod=0;returning-chatter=0;"
+                                 "room-id=154649067;subscriber=0;tmi-sent-ts=1749175029323;turbo=0;user-id=154649067;"
+                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :does highlighting work too?",isTyping, chat);
+            parseAndPrintMessage("@badge-info=;badges=broadcaster/1,streamer-awards-2024/1;color=#FF69B4;display-name=gavinbot32;"
+                                 "emotes=;first-msg=0;flags=;id=2fc5544a-2fa5-4860-96f2-6ed68c306913;mod=0;returning-chatter=0;"
+                                 "room-id=154649067;subscriber=0;tmi-sent-ts=1749175029323;turbo=0;user-id=154649067;"
+                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :apparently",isTyping, chat);
+            parseAndPrintMessage("@badge-info=;badges=subscriber/1,streamer-awards-2024/1;color=#6694ff;display-name=segfaultSteve;"
+                                 "emotes=;first-msg=0;flags=;id=2fc5544a-2fa5-4860-96f2-6ed68c306913;mod=0;returning-chatter=0;"
+                                 "room-id=154649067;subscriber=0;tmi-sent-ts=1749175029323;turbo=0;user-id=154649067;"
+                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :famous last words",isTyping, chat);
+            parseAndPrintMessage("@badge-info=;badges=streamer-awards-2024/1;color=#ff0000;display-name=ipsum2000;"
+                                 "emotes=;first-msg=0;flags=;id=2fc5544a-2fa5-4860-96f2-6ed68c306913;mod=0;returning-chatter=0;"
+                                 "room-id=154649067;subscriber=0;tmi-sent-ts=1749175029323;turbo=0;user-id=154649067;"
+                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :apparently theres a list of commands?",isTyping, chat);
+            parseAndPrintMessage("@badge-info=;badges=broadcaster/1,streamer-awards-2024/1;color=#FF69B4;display-name=gavinbot32;"
+                                 "emotes=;first-msg=0;flags=;id=2fc5544a-2fa5-4860-96f2-6ed68c306913;mod=0;returning-chatter=0;"
+                                 "room-id=154649067;subscriber=0;tmi-sent-ts=1749175029323;turbo=0;user-id=154649067;"
+                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :yep, its full of commands to customize your experience!",isTyping, chat);
+            parseAndPrintMessage("@badge-info=;badges=turbo/1,streamer-awards-2024/1;color=#ffffff;display-name=CodeMonkey;"
+                                 "emotes=;first-msg=0;flags=;id=2fc5544a-2fa5-4860-96f2-6ed68c306913;mod=0;returning-chatter=0;"
+                                 "room-id=154649067;subscriber=0;tmi-sent-ts=1749175029323;turbo=0;user-id=154649067;"
+                                 "user-type= :gavinbot32!gavinbot32@gavinbot32.tmi.twitch.tv PRIVMSG #gavinbot32 :Okay that's actually pretty cool",isTyping, chat);
         }
     }
 
